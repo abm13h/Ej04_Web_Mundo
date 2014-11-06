@@ -16,7 +16,7 @@ public class PaisDAO { // esta es la Clase que se va a comunicar con la BBDD
 	
 	//creamos 2 métodos (1 conectar 2 desconectar)
 	
-	public void conectar()
+	private void conectar()
 	{
 		try 
 		{// 2. Obtener la conexión dándole las credenciales. 
@@ -28,7 +28,7 @@ public class PaisDAO { // esta es la Clase que se va a comunicar con la BBDD
 			e.printStackTrace();
 		}
 	}
-	public void desconectar()
+	private void desconectar()
 	{     
 	try{cx.close();} 
 	catch (SQLException e){e.printStackTrace();}
