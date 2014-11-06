@@ -2,6 +2,7 @@ package es.mundo.controladores;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import es.mundo.modelo.Negocio;
+import es.mundo.modelo.Pais;
 
 /**
  * Servlet implementation class DarAltaServlet
@@ -44,6 +46,18 @@ public class DarAltaServlet extends HttpServlet {
     /* 3 Pasarle los datos recuperados a la capa Negocio */
     Negocio negocio = new Negocio();
     int id=negocio.darAlta(nombre, habitantes);
+    
+    // además de darlo de alta en la BBDD lo muestro...
+    // consultar el pais y...
+    Pais p=negocio.consultarUno(id);
+    // meter (setear) el pais en el request para que en vistaIndividual.jsp lo pueda recuperar
+    request.setAttribute("pais", p); // voy a consultar en BBDD por si borran el pais
+    
+    //... redirigir a la vista individual
+    RequestDispatcher rd;
+    rd=request.getRequestDispatcher("vistaIndividual.jsp");
+    rd.forward(request, response);
+    
     
 	}
 

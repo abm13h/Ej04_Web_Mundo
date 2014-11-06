@@ -16,7 +16,7 @@ public class PaisDAO { // esta es la Clase que se va a comunicar con la BBDD
 	
 	//creamos 2 métodos (1 conectar 2 desconectar)
 	
-	public void conectar()
+	private void conectar()
 	{
 		try 
 		{// 2. Obtener la conexión dándole las credenciales. 
@@ -28,7 +28,7 @@ public class PaisDAO { // esta es la Clase que se va a comunicar con la BBDD
 			e.printStackTrace();
 		}
 	}
-	public void desconectar()
+	private void desconectar()
 	{     
 	try{cx.close();} 
 	catch (SQLException e){e.printStackTrace();}
@@ -36,6 +36,7 @@ public class PaisDAO { // esta es la Clase que se va a comunicar con la BBDD
 	
 	public int darAlta(Pais pais) 
 	{
+		int idRetornar = 0;
 		try 
 		{
 			// 1. Conectar
@@ -56,16 +57,23 @@ public class PaisDAO { // esta es la Clase que se va a comunicar con la BBDD
 			// 3. ejecutar la consulta sql
 			// ps.executeQuery ... para "Select" que no modifica la BBDD
 			int filasAfectadas = ps.executeUpdate();
-			
 			// 4. hacer el commit
 			cx.commit();
+						
+			// no sabemos si el insert irá ok...
+			if(filasAfectadas>=1)
+			{
+				idRetornar=ultimoId();
+			}
+			
+			
 			
 			// 5. cerrar la conexión
 			desconectar();
 
 		} catch (SQLException e){e.printStackTrace();}
 				
-		return 0; // ojo!
+		return idRetornar; // ojo!
 	}
 	public Pais consultarUno(int id) 
 	{   Pais p=new Pais();
@@ -142,4 +150,40 @@ public class PaisDAO { // esta es la Clase que se va a comunicar con la BBDD
 		    
 		} return paises;
 	}		
+	public int ultimoId(){
+		int idRecuperado=0;
+		try {
+			// 1 conectar
+			conectar();
+			// 2 preparar la consulta
+			PreparedStatement ps;
+			
+			ps = cx.prepareStatement("SELECT MAX(id) as ultimoId FROM pais");
+			
+			// 2.1 setear los interrogantes
+			// en este caso no tenemos interrogantes porque no usamos where...
+			
+			// 3 ejecutar la consulta
+			ResultSet rs = ps.executeQuery();
+			
+			// 4. llenar el objeto pais con los datos de
+			// respuesta de la Base de Datos que viene en 
+			// un objeto del tipo ResultSet "rs".
+			// Comprobamos si la consulta devuelve al menos 1 elemento...
+			// Como la consulta la hacemos con max(id)
+			// sabemos que devolverá 1 sola fila por eso nos sirve
+						
+		    if(rs.next())
+			{// viene al menos 1 fila (tiene un next)
+				idRecuperado=rs.getInt("ultimoId");
+			}  
+			
+			// 5 desconectar
+			   desconectar();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}    
+		return idRecuperado;
+	}
 }
