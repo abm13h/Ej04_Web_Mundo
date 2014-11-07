@@ -14,16 +14,16 @@ import es.mundo.modelo.Negocio;
 import es.mundo.modelo.Pais;
 
 /**
- * Servlet implementation class consultarTodosServlet
+ * Servlet implementation class ConsultarNombreServlet
  */
-@WebServlet("/consultarTodos")
-public class consultarTodosServlet extends HttpServlet {
+@WebServlet("/ConsultarNombre")
+public class ConsultarNombreServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public consultarTodosServlet() {
+    public ConsultarNombreServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,13 +32,12 @@ public class consultarTodosServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String nombre=request.getParameter("nombre");
 		// invocar al Negocio
 		Negocio negocio=new Negocio();
-		// 1er escribo...
-		// ArrayList<Pais> paises=negocio.consultarTodos();
-		// me pide importar "Pais" de "es.mundo.modelo"
-		ArrayList<Pais> paises=negocio.consultarTodos();
-		
+		// ArrayList<Pais> paises=negocio.consultarNombre();
+		ArrayList<Pais> paises=negocio.consultarNombre(nombre);
+				
 		// meter el arrayList en el request
 		request.setAttribute("listado", paises);
 		// redirigir al código jsp "mostrarTodos"
@@ -46,6 +45,8 @@ public class consultarTodosServlet extends HttpServlet {
 		rd=request.getRequestDispatcher("mostrarTodos.jsp");
 		rd.forward(request, response);
 	}
+
+
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

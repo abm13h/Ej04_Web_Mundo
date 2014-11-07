@@ -12,6 +12,7 @@
       <!--  recuperar el Pais q está en el request -->
       <!--  le doy la vuelta al objeto "pais" para tener los 
       <!--  metodos get y set -->
+<form action="Procesar" method="get">      
       <%Pais paisDePaisDAO= (Pais)request.getAttribute("pais");%>
 
 <table>
@@ -22,13 +23,16 @@
 </tr>
 <!--  mostrarlo -->
  <tr>
-      <td><%=paisDePaisDAO.getId() %> </td>
-      <td><%=paisDePaisDAO.getNombre() %> </td>
-      <td><%=paisDePaisDAO.getHabitantes() %> </td>
+      <td><input type="text" name="id" value="<%=paisDePaisDAO.getId()%>" readonly="readonly"/></td>
+      <td><input type="text" name="nombre" value="<%=paisDePaisDAO.getNombre()%>"/></td>
+      <td><input type="text" name="habitantes" value="<%=paisDePaisDAO.getHabitantes()%>"/></td>
 </tr>
 </table>
-</br></br></br>
-  <a href="index.html">Ir a inicio</a>
+<br></br>
+<input type="submit" value="Borrar" id="borrar" name="borrar"/>
+<input type="submit" value="Actualizar" id="actualizar" name="actualizar"/>
+<br></br>
+<a href="index.html">Ir a inicio</a>
+</form> 
 </body>
-
 </html>

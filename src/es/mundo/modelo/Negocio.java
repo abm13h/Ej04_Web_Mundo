@@ -36,14 +36,54 @@ public class Negocio {
 		return pais; 
 	}
 
+	
+	
 	public ArrayList<Pais> consultarTodos() {
 		// aquí las reglas si las hubiera...
 		// llamar al DAO...
 		ArrayList<Pais> paises=paisdao.consultarTodos();
 		return paises;
 		//
-		
-		
+	
+	}
+	public ArrayList<Pais> consultarNombre(String nombre) {
+		// se podría validar si el que solicita la consulta tiene
+		// autorización...
+		ArrayList<Pais> paises = paisdao.consultarNombre(nombre);
+		return paises; 
+	}
+
+	public String borrar(int id) {
+		String msg;
+		// reglas del Negocio... 
+		// Verificar si el pais tiene deudas pendientes
+		// mandar un correo al administrador
+		// metodo que devuelve un numero entero...
+		int paisesBorrados=paisdao.borrar(id);
+		if(paisesBorrados>=1)
+		{
+			//creamos una variable tipo String para devolvérsela al Servlet
+			msg="Se ha/han borrado " + paisesBorrados + " pais/paises";
+			
+		} else {msg="No se ha podido borrar. Quizá haya sido borrado por otro usuario.";}
+		return msg;
+	}
+
+	public String actualizar(int id, String nombre, int habitantes) {
+		String msg;
+		// reglas del Negocio... 
+		// Verificar si el pais tiene deudas pendientes
+		// mandar un correo al administrador
+		// metodo que devuelve un numero entero...
+		int filas=paisdao.actualizar(id, nombre, habitantes);
+		if(filas>=1)
+		{
+			//creamos una variable tipo String para devolvérsela al Servlet
+			msg="Se ha actualizado " + filas + " pais";
+			
+		} else {msg="No se ha podido actualizar";}
+	
+		return msg;
 	}
 
 }

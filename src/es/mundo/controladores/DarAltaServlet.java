@@ -1,6 +1,7 @@
 package es.mundo.controladores;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -49,17 +50,26 @@ public class DarAltaServlet extends HttpServlet {
     
     // además de darlo de alta en la BBDD lo muestro...
     // consultar el pais y...
-    Pais p=negocio.consultarUno(id);
+    //->Pais p=negocio.consultarUno(id);
     // meter (setear) el pais en el request para que en vistaIndividual.jsp lo pueda recuperar
-    request.setAttribute("pais", p); // voy a consultar en BBDD por si borran el pais
+    //->request.setAttribute("pais", p); // voy a consultar en BBDD por si borran el pais
     
     //... redirigir a la vista individual
-    RequestDispatcher rd;
-    rd=request.getRequestDispatcher("vistaIndividual.jsp");
+    //->RequestDispatcher rd;
+    //->rd=request.getRequestDispatcher("vistaIndividual.jsp");
+    
+    //... o redirigir a la vista o consulta "mostrarTodos"
+    ArrayList<Pais> paises=negocio.consultarTodos();
+	
+	// meter el arrayList en el request
+	request.setAttribute("listado", paises);
+	// redirigir al código jsp "mostrarTodos"
+	RequestDispatcher rd;
+	rd=request.getRequestDispatcher("mostrarTodos.jsp");
+    // rd=request.getRequestDispatcher("mostrarTodos.jsp");
+    
     rd.forward(request, response);
-    
-    
-	}
+    }
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

@@ -186,4 +186,104 @@ public class PaisDAO { // esta es la Clase que se va a comunicar con la BBDD
 			}    
 		return idRecuperado;
 	}
+	public ArrayList<Pais> consultarNombre(String nombre) {
+		ArrayList<Pais> paises=new ArrayList<Pais>();
+		try {
+		// 1 conectar
+		conectar();
+		// 2 preparar la consulta
+		PreparedStatement ps = cx.prepareStatement("SELECT * FROM pais WHERE nombre LIKE ?");
+		// 2.1 setear los interrogantes
+		// en este caso no tenemos interrogantes porque no usamos where...
+		ps.setString(1, "%"+nombre+"%");
+		// 3 ejecutar la consulta
+		ResultSet rs = ps.executeQuery();
+		
+		// 4 bajar el resultado de la consulta y ponerlo en el ArrayList
+		while(rs.next()){
+			// entre el objeto "rs" y el objeto "arrayList"
+			// me creo un objeto intermedio tipo Pais
+			Pais p = new Pais();
+			// muevo cada elemento del "rs" al objeto intermedio tipo Pais
+			p.setId(rs.getInt("id"));
+			p.setNombre(rs.getString("nombre"));
+			p.setHabitantes(rs.getInt("habitantes"));
+			// muevo cada elemento del objeto intermedio tipo Pais
+			// al objeto "arrayList"
+			paises.add(p);
+		}
+		
+		// 5 desconectar
+		   desconectar();
+		} catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return paises;
+    }
+	public int borrar(int id) {
+		int filasAfectadas = 0;
+		try 
+		{   // 1. Conectar
+			conectar();
+			
+			// 2. preparar la consulta sql
+			// "PreparedStatement" es un objeto que permite desde Java
+			//  construir instrucciones SQL
+			PreparedStatement ps;
+			ps = cx.prepareStatement("DELETE FROM pais WHERE id=?");
+			
+			// 2.1 setear los interrogantes
+			ps.setInt(1, id); // el id que viene de fuera
+			
+			// 3. ejecutar la consulta sql
+			filasAfectadas = ps.executeUpdate();
+			
+			// 4. hacer el commit
+			cx.commit();
+			
+			// 5. cerrar la conexión
+			desconectar();
+
+		} catch (SQLException e){e.printStackTrace();}
+				
+		return filasAfectadas; //
+	}
+	public int actualizar(int id, String nombre, int habitantes) 
+	{
+		int idRetornar = 0;
+		try 
+		{
+			// 1. Conectar
+			conectar();
+			
+			// 2. preparar la consulta sql
+			// "PreparedStatement" es un objeto que permite desde Java
+			//  construir instrucciones SQL
+			PreparedStatement ps;
+			ps = cx.prepareStatement("UPDATE pais SET nombre=?, habitantes=? WHERE ID=?");
+			
+			// 2.1 setear los interrogantes
+			
+			ps.setString(1, nombre);
+			ps.setInt(2, habitantes);
+			ps.setInt(3, id); // el id que viene de fuera
+			
+			// 3. ejecutar la consulta sql
+			// ps.executeQuery ... para "Select" que no modifica la BBDD
+			int filasAfectadas = ps.executeUpdate();
+			// 4. hacer el commit
+			cx.commit();
+						
+			// no sabemos si el insert irá ok...
+			if(filasAfectadas>=1)
+			{idRetornar=filasAfectadas;}
+			
+			// 5. cerrar la conexión
+			desconectar();
+
+		} catch (SQLException e){e.printStackTrace();}
+				
+		return idRetornar; // 
+	}
 }

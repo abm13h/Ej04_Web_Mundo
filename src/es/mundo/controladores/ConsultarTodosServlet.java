@@ -1,6 +1,7 @@
 package es.mundo.controladores;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,16 +14,16 @@ import es.mundo.modelo.Negocio;
 import es.mundo.modelo.Pais;
 
 /**
- * Servlet implementation class ConsultarUnoServlet
+ * Servlet implementation class consultarTodosServlet
  */
-@WebServlet("/ConsultarUno")
-public class ConsultarUnoServlet extends HttpServlet {
+@WebServlet("/ConsultarTodos")
+public class ConsultarTodosServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ConsultarUnoServlet() {
+    public ConsultarTodosServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,22 +32,19 @@ public class ConsultarUnoServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// recuperamos el Id del request
-		int id= Integer.parseInt(request.getParameter("idPais"));
-		Negocio negocio = new Negocio();
-		Pais pais = negocio.consultarUno(id);
+		// invocar al Negocio
+		Negocio negocio=new Negocio();
+		// 1er escribo...
+		// ArrayList<Pais> paises=negocio.consultarTodos();
+		// me pide importar "Pais" de "es.mundo.modelo"
+		ArrayList<Pais> paises=negocio.consultarTodos();
 		
-		//Negocio ha devuelto un pais con todos sus datos 
-		
-		//meter el pais en el request. uso el metodo setAttribute
-		request.setAttribute("pais", pais);
-		
-		//redirigir hacia la página.jsp que muestra los datos del pais
+		// meter el arrayList en el request
+		request.setAttribute("listado", paises);
+		// redirigir al código jsp "mostrarTodos"
 		RequestDispatcher rd;
-		rd=request.getRequestDispatcher("vistaIndividual.jsp");
+		rd=request.getRequestDispatcher("mostrarTodos.jsp");
 		rd.forward(request, response);
-		
-		
 	}
 
 	/**
