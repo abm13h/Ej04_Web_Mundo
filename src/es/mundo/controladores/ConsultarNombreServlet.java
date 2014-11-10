@@ -32,7 +32,7 @@ public class ConsultarNombreServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String nombre=request.getParameter("nombre");
+		String nombre=request.getParameter("nombrePais");
 		// invocar al Negocio
 		Negocio negocio=new Negocio();
 		// ArrayList<Pais> paises=negocio.consultarNombre();

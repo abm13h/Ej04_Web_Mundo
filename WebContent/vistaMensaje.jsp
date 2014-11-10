@@ -11,6 +11,9 @@
 </head>
 <body>
 <h3>Respuesta de la base de datos</h3>
+ <br></br>
  <p><%=mensaje %></p>
+ <br></br>
+ <p><a href="index.html">Ir a inicio</a></p>
 </body>
 </html>

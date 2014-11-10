@@ -45,8 +45,6 @@ public class ConsultarUnoServlet extends HttpServlet {
 		RequestDispatcher rd;
 		rd=request.getRequestDispatcher("vistaIndividual.jsp");
 		rd.forward(request, response);
-		
-		
 	}
 
 	/**

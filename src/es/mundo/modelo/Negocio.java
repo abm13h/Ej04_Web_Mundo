@@ -46,7 +46,8 @@ public class Negocio {
 		//
 	
 	}
-	public ArrayList<Pais> consultarNombre(String nombre) {
+	public ArrayList<Pais> consultarNombre(String nombre) 
+	{
 		// se podría validar si el que solicita la consulta tiene
 		// autorización...
 		ArrayList<Pais> paises = paisdao.consultarNombre(nombre);

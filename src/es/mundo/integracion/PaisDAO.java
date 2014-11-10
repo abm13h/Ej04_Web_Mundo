@@ -195,7 +195,7 @@ public class PaisDAO { // esta es la Clase que se va a comunicar con la BBDD
 		PreparedStatement ps = cx.prepareStatement("SELECT * FROM pais WHERE nombre LIKE ?");
 		// 2.1 setear los interrogantes
 		// en este caso no tenemos interrogantes porque no usamos where...
-		ps.setString(1, "%"+nombre+"%");
+		ps.setString(1, "%" + nombre + "%");
 		// 3 ejecutar la consulta
 		ResultSet rs = ps.executeQuery();
 		
