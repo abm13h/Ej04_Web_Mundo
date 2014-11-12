@@ -13,7 +13,9 @@
       <!--  le doy la vuelta al objeto "pais" para tener los 
       <!--  metodos get y set -->
 <form action="Procesar" method="get">      
-      <%Pais paisDePaisDAO= (Pais)request.getAttribute("pais");%>
+      <%
+            	Pais paisDePaisDAO= (Pais)request.getAttribute("pais");
+            %>
 
 <table>
  <tr>

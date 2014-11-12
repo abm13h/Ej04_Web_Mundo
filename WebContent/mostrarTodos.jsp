@@ -12,7 +12,9 @@
       <!--  recuperar el Pais q está en el request -->
       <!--  le doy la vuelta al objeto "pais" para tener los 
       <!--  metodos get y set -->
-      <%ArrayList<Pais> paises= (ArrayList<Pais>)request.getAttribute("listado");%>
+      <%
+      	ArrayList<Pais> paises= (ArrayList<Pais>)request.getAttribute("listado");
+      %>
 
 <table>
  <tr>
@@ -21,7 +23,9 @@
      <th>Habitantes </th>
 </tr>
 <!--  mostrarlo. Aquí comienza el foreach -->
-<%for(Pais pais:paises){%>
+<%
+	for(Pais pais:paises){
+%>
  <tr>
       <td><%=pais.getId() %> </td>
       <td><%=pais.getNombre() %> </td>
