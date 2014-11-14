@@ -3,6 +3,7 @@ package es.mundo.modelo;
 
 import java.util.ArrayList;
 
+import es.curso.excepciones.PaisVacioException;
 import es.mundo.modelo.Pais;
 import es.mundo.integracion.PaisDAO;
 
@@ -17,12 +18,21 @@ public class Negocio {
 		//mandar un correo a alguna institución
 	  
 	  //Pais pais=new Pais(nombre, habitantes); //me pide int,
-		Pais pais=new Pais(habitantes, nombre, habitantes);
-		
 		// 2 maneras de hacerlo (elegir una de ellas):
-		// 1era:
-		// int id=paisdao.darAlta(pais); // me da un error al ejecutar
-		int id=paisdao.darAlta(pais);
+				// 1era:
+				// int id=paisdao.darAlta(pais); // me da un error al ejecutar
+		int id = 0;
+		try {
+			Pais pais=new Pais(habitantes, nombre, habitantes);
+			
+			id = paisdao.darAlta(pais);
+			throw new PaisVacioException();
+		} 
+		catch (PaisVacioException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return id;
 		
 		// 2nda:
