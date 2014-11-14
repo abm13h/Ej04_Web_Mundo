@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import es.curso.excepciones.PaisVacioException;
 import es.mundo.modelo.Negocio;
 
 /**
@@ -47,7 +48,12 @@ public class ProcesarServlet extends HttpServlet {
 		   }
 		   if(actualizar!=null)
 		   {
-			mensajeDoGet = negocio.actualizar(id, nombre, habitantes);
+			try {
+				mensajeDoGet = negocio.actualizar(id, nombre, habitantes);
+			} catch (PaisVacioException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		   }
 		   // llamamos al método "borrar" dentro de negocio.java
 		   // negocio.borrar es un metodo String que recibe un "id" entero

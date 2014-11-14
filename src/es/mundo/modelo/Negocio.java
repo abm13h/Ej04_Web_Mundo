@@ -80,12 +80,13 @@ public class Negocio {
 		return msg;
 	}
 
-	public String actualizar(int id, String nombre, int habitantes) {
+	public String actualizar(int id, String nombre, int habitantes) throws PaisVacioException {
 		String msg;
 		// reglas del Negocio... 
 		// Verificar si el pais tiene deudas pendientes
 		// mandar un correo al administrador
 		// metodo que devuelve un numero entero...
+		
 		int filas=paisdao.actualizar(id, nombre, habitantes);
 		if(filas>=1)
 		{
